@@ -43,6 +43,7 @@ export default class ObjectFieldLookup extends LightningElement {
     }
 
     // Handle Object Search
+    //Demo Change
     handleObjectSearch(event) {
         this.objectSearchText = event.target.value;
         this.filteredObjects = this.allObjects.filter(obj =>
