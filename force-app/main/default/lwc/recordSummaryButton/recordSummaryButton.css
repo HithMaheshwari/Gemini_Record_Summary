@@ -1,0 +1,66 @@
+.card-container{
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 1);
+   
+    box-shadow: rgba(30, 100, 200, 0.6) 0px 30px 60px -12px inset, rgba(30, 100, 200, 0.6) 0px 18px 36px -18px inset;
+    
+    border: 0.1rem solid rgba(0, 0, 0, 0.150);
+    border-radius: 4px;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+.card-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4ca2e8;
+    padding: 0.2rem 0.5rem; /* Reduced top & bottom padding */
+    margin: 0; /* Ensure no extra margin */
+}
+.card-header .custom-icon {
+    --sds-c-icon-color-foreground-default: rgb(38, 100, 194); /* Change icon color */
+    --sds-c-icon-size-default: 1rem; /* Increase icon size */
+    --sds-c-icon-color-background: transparent; /* No background */
+}
+
+.record-summary-btn {
+    background: linear-gradient(135deg, #90caf9, #2575fc); /* Purple to Blue Gradient */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px; /* Sharper Edges */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 5px 12px rgba(42, 140, 255, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.record-summary-btn:hover {
+    background: linear-gradient(135deg, #cc0e57, #741eff);
+    transform: scale(1.05);
+    box-shadow: 0px 6px 14px rgba(42, 140, 255, 0.5);
+}
+
+.record-summary-btn:active {
+    transform: scale(0.98);
+}
+
+.btn-text {
+    white-space: nowrap;
+    font-weight: 600;
+}
