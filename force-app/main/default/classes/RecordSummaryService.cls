@@ -17,7 +17,7 @@ public class RecordSummaryService {
         List<API_Key__mdt> metadataRecords = [SELECT MasterLabel,Key__c,URL__c FROM API_Key__mdt  WHERE MasterLabel = 'Gemini API'];
         String key = metadataRecords[0].Key__c;
         String url = metadataRecords[0].URL__c+key;
-        String prompt = 'Frame Summary for sales person that could be helpful for him during the Customer Call and New actions for Business with this detail:';
+        String prompt = 'Frame Summary for sales person that could be helpful for him during the Customer Call and New actions for Business with this detail: ';
         
         Http http = new Http();
         HttpRequest req = new HttpRequest();

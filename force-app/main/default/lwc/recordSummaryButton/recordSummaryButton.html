@@ -1,15 +1,47 @@
 <template>
     <div class="card-container">
-                <div class="card-header">
-                    <lightning-icon icon-name="utility:description" size="small" alternative-text="Summary"
-                        class="custom-icon"></lightning-icon>
-                        <span class="title">Record Summary</span>
-                    </div>
-                <div class="button-container">
-                    <button class="record-summary-btn" onclick={handleClick}>
-                        
-                        <span class="btn-text">View Summary</span>
-                    </button>
-                </div>
+        <div class="card-header">
+            <lightning-icon icon-name="utility:description" size="small" alternative-text="Summary"
+                class="custom-icon"></lightning-icon>
+            <span class="title">Record Summary</span>
+
+            <!-- Copy Button Positioned on the Right -->
+            <!-- <button class="copy-btn" onclick={handleCopy}>
+                <lightning-icon icon-name="utility:copy" size="xx-small" alternative-text="Copy"></lightning-icon>
+                <span class="copy-text"></span>
+            </button> -->
+            <!-- Copy Button with Tooltip -->
+<!-- Copy Button with Custom Tooltip -->
+<div class="tooltip-wrapper">
+    <button class="copy-btn" onclick={handleCopy}>
+        <lightning-icon icon-name="utility:copy" size="xx-small" alternative-text="Copy"></lightning-icon>
+    </button>
+    <span class="tooltip-text">Copy summary to clipboard</span>
+</div>
+
+
+        </div>
+
+        <template lwc:if={showButton}>
+            <div class="button-container">
+                <button class="record-summary-btn" onclick={handleClick}>
+                    <span class="btn-text">View Summary</span>
+                </button>
             </div>
+        </template>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </template>
+
+        <template lwc:if={formattedData}>
+            <div class="formatted-content" lwc:dom="manual"></div>
+        </template>
+
+        <template lwc:if={errorMessage}>
+            <div class="error-message">
+                <p>{errorMessage}</p>
+            </div>
+        </template>
+    </div>
 </template>
