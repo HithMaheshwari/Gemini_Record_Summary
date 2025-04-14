@@ -1,0 +1,80 @@
+    <template>
+        <lightning-card title="Chat Agent" icon-name="utility:chat">
+            <div class="slds-p-around_medium custom-container">
+                <!-- Current Question and Answer Section -->
+                <div class="qa-current">
+                    <template if:true={question}>
+                        <div class="qa-block">
+                            <p class="user-question">Q: {question}</p>
+                            <template if:true={answer}>
+                                <div class="ai-answer" lwc:dom="manual"></div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Input Section -->
+                <div class="input-section">
+                    <lightning-input 
+                        label="Ask a Question" 
+                        type="text" 
+                        value={question} 
+                        placeholder="Type your question here..." 
+                        class="input-box"
+                        onchange={handleInputChange}
+                        onkeydown={handleKeyDown}
+                        >
+                    </lightning-input>
+                    
+                    <div class="button-group">
+                        <lightning-button 
+                            label="Submit" 
+                            variant="brand" 
+                            class="submit-button"
+                            onclick={handleSubmit}>
+                        </lightning-button>
+                        
+                        <lightning-button 
+                            label="Clear" 
+                            variant="neutral" 
+                            class="clear-button"
+                            onclick={handleClear}>
+                        </lightning-button>
+                        
+                        <lightning-button 
+                            label="Show History" 
+                            variant="success" 
+                            class="history-button"
+                            onclick={toggleHistory}>
+                        </lightning-button>
+                    </div>
+                </div>
+
+                <!-- Answer Section -->
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </template>
+                <template if:true={showAnswer}>
+                    <div class="answer-section">
+                        <h3>Answer</h3>
+                        <div class="ai-answer" lwc:dom="manual"></div>
+                    </div>
+                </template>
+
+                <!-- Question History Section -->
+                <template if:true={showHistory}>
+                    <div class="history-section">
+                        <h3>Question History</h3>
+                        <ul class="history-list">
+                            <template for:each={questionHistory} for:item="q">
+                                <li key={q.id} class="history-item">
+                                    <p class="user-question">Q: {q.text}</p>
+                                    <div class="ai-answer" lwc:dom="manual" data-id={q.id}></div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </template>

@@ -1,13 +1,26 @@
 <template>
-    <lightning-card title="Searchable Lookup Component">
-        <div class="slds-m-around_medium">
-            <!-- Searchable Object Lookup -->
+    <lightning-card title="✨ Searchable Lookup Experience">
+        <div class="slds-p-around_medium">
+
+            <!-- Top Bar with Add More Object Button -->
+            <div class="slds-grid slds-grid_align-spread slds-m-bottom_medium">
+                <div class="slds-text-heading_small">Searchable Lookup</div>
+                <lightning-button label="Add More Object" variant="neutral" onclick={handleAddMore}></lightning-button>
+            </div>
+
+            <!-- OBJECT SEARCH -->
             <div class="slds-form-element">
-                <label class="slds-form-element__label">Select Object</label>
+                <label class="slds-form-element__label">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <strong>Select Object</strong>
+                        <lightning-helptext content="Search and choose any Salesforce Object." class="slds-m-left_x-small"></lightning-helptext>
+                    </div>
+                </label>
+                
                 <div class="slds-combobox_container">
                     <div class={objectDropdownClass} aria-expanded="true" aria-haspopup="listbox">
-                        <lightning-input type="text" placeholder="Search Object..." value={objectSearchText} 
-                            onchange={handleObjectSearch} onclick={toggleObjectDropdown}>
+                        <lightning-input type="search" variant="label-hidden" placeholder="Search Object..." value={objectSearchText}
+                            onchange={handleObjectSearch} onclick={toggleObjectDropdown} icon-name="utility:search">
                         </lightning-input>
                         <template if:true={showObjectDropdown}>
                             <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
@@ -15,6 +28,7 @@
                                     <template for:each={filteredObjects} for:item="obj">
                                         <li key={obj.value} class="slds-listbox__item" data-value={obj.value} onclick={selectObject}>
                                             <span class="slds-media slds-listbox__option slds-listbox__option_plain">
+                                                <lightning-icon icon-name="standard:object" size="x-small" class="slds-m-right_x-small"></lightning-icon>
                                                 <span class="slds-truncate">{obj.label}</span>
                                             </span>
                                         </li>
@@ -25,34 +39,34 @@
                     </div>
                 </div>
             </div>
-            
 
-            <!-- Multi-Select Field Lookup (Only if Object is Selected) -->
+            <!-- FIELD MULTI-SELECT -->
             <template if:true={selectedObject}>
                 <div class="slds-form-element slds-m-top_medium">
-                    <label class="slds-form-element__label">Select Fields</label>
+                    <label class="slds-form-element__label">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <strong>Select Fields</strong>
+                            <lightning-helptext 
+                                content="You can select multiple fields. Hover to see field type." 
+                                class="slds-m-left_x-small">
+                            </lightning-helptext>
+                        </div>
+                    </label>
                     
-                    <!-- Selected Fields Pills -->
-                    <template for:each={selectedFields} for:item="field">
-                        <span key={field} class="slds-pill slds-m-right_x-small">
-                            <span class="slds-pill__label">{field}</span>
-                            <button class="slds-button slds-button_icon slds-pill__remove" data-field={field} onclick={removeField}>
-                                <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
-                            </button>
-                        </span>
-                    </template>
 
+                    <!-- FIELD SEARCH DROPDOWN -->
                     <div class="slds-combobox_container slds-m-top_x-small">
                         <div class={fieldDropdownClass} aria-expanded="true" aria-haspopup="listbox">
-                            <lightning-input type="text" placeholder="Search Field..." value={fieldSearchText} 
-                                onchange={handleFieldSearch} onclick={toggleFieldDropdown}>
+                            <lightning-input type="search" variant="label-hidden" placeholder="Search Field..." value={fieldSearchText}
+                                onchange={handleFieldSearch} onclick={toggleFieldDropdown} icon-name="utility:search">
                             </lightning-input>
                             <template if:true={showFieldDropdown}>
                                 <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
                                     <ul class="slds-listbox slds-listbox_vertical" role="listbox">
                                         <template for:each={filteredFields} for:item="field">
                                             <li key={field.value} class="slds-listbox__item" data-value={field.value} onclick={selectField}>
-                                                <span class="slds-media slds-listbox__option slds-listbox__option_plain">
+                                                <span class="slds-media slds-listbox__option slds-listbox__option_plain" title={field.type}>
+                                                    <lightning-icon icon-name="standard:custom" size="x-small" class="slds-m-right_x-small"></lightning-icon>
                                                     <span class="slds-truncate">{field.label}</span>
                                                 </span>
                                             </li>
@@ -62,24 +76,38 @@
                             </template>
                         </div>
                     </div>
+
+                    <!-- SELECTED FIELD PILLS -->
+                    <!-- <div class="slds-pill_container slds-m-top_small slds-grid slds-wrap"> -->
+                        <template for:each={selectedFields} for:item="field">
+                            <span key={field} class="slds-pill slds-m-right_x-small slds-m-bottom_x-small">
+                                <span class="slds-pill__label" >{field}</span>
+                                <button class="slds-button slds-button_icon slds-pill__remove" data-field={field} onclick={removeField}>
+                                    <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
+                                </button>
+                            </span>
+                        </template>
+                    <!-- </div> -->
                 </div>
             </template>
 
-            <!-- Show the selected Data -->
+            <!-- DISPLAY MAPPED OBJECTS + FIELDS -->
             <template if:true={objectFieldsList}>
-                <ul>
+                <div class="slds-box slds-m-top_medium slds-theme_shade slds-scrollable_y" style="max-height: 180px">
                     <template for:each={objectFieldsList} for:item="item">
-                        <li key={item.objectName}>
-                            <strong>{item.objectName}:</strong> {item.fields}
-                        </li>
+                        <div key={item.objectName} class="slds-m-bottom_x-small">
+                            <strong class="slds-text-title_caps">{item.objectName}</strong>
+                            <div class="slds-text-body_regular slds-m-left_medium">
+                                {item.fields}
+                            </div>
+                        </div>
                     </template>
-                </ul>
+                </div>
             </template>
 
-            <!-- Buttons -->
-            <div class="slds-m-top_medium">
-                <lightning-button label="Add More Object" variant="neutral" onclick={handleAddMore}></lightning-button>
-                <lightning-button label="Cancel" variant="destructive" class="slds-m-left_small" onclick={handleCancel}></lightning-button>
+            <!-- ACTION BUTTONS -->
+            <div class="slds-m-top_medium slds-align_absolute-center slds-grid slds-gutters">
+                <lightning-button label="Cancel" variant="destructive" onclick={handleCancel}></lightning-button>
                 <lightning-button label="Done" variant="brand" class="slds-m-left_small" onclick={handleDone}></lightning-button>
             </div>
         </div>

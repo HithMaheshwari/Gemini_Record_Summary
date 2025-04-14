@@ -5,21 +5,24 @@
                 class="custom-icon"></lightning-icon>
             <span class="title">Record Summary</span>
 
-            <!-- Copy Button Positioned on the Right -->
-            <!-- <button class="copy-btn" onclick={handleCopy}>
-                <lightning-icon icon-name="utility:copy" size="xx-small" alternative-text="Copy"></lightning-icon>
-                <span class="copy-text"></span>
-            </button> -->
-            <!-- Copy Button with Tooltip -->
-<!-- Copy Button with Custom Tooltip -->
-<div class="tooltip-wrapper">
-    <button class="copy-btn" onclick={handleCopy}>
-        <lightning-icon icon-name="utility:copy" size="xx-small" alternative-text="Copy"></lightning-icon>
-    </button>
-    <span class="tooltip-text">Copy summary to clipboard</span>
-</div>
+            <!-- Action Buttons (Copy + Refresh) -->
+            <div class="action-buttons">
+                <!-- Copy Button with Tooltip -->
+                <div class="tooltip-wrapper">
+                    <button class="copy-btn" onclick={handleCopy}>
+                        <lightning-icon icon-name="utility:copy" size="xx-small" alternative-text="Copy"></lightning-icon>
+                    </button>
+                    <span class="tooltip-text">Copy summary to clipboard</span>
+                </div>
 
-
+                <!-- Refresh Button with Tooltip -->
+                <div class="tooltip-wrapper">
+                    <button class="copy-btn" onclick={handleRefresh}>
+                        <lightning-icon icon-name="utility:refresh" size="xx-small" alternative-text="Refresh"></lightning-icon>
+                    </button>
+                    <span class="tooltip-text">Refresh & show button</span>
+                </div>
+            </div>
         </div>
 
         <template lwc:if={showButton}>

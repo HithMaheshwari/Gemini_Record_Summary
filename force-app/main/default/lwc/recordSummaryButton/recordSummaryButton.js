@@ -73,4 +73,13 @@ export default class RecordSummaryButton extends LightningElement {
                 console.error("Copy failed:", err);
             });
     }
+    handleRefresh() {
+        this.showButton = true;
+        this.formattedData = null;
+        this.errorMessage = null;
+    }
+    
+
+
+
 }
